@@ -1,58 +1,75 @@
-<html>
-    <head>
-        <title>Calculadora</title>
-        <link rel="stylesheet" type="text/css" href="style.css" media="all">
-    </head>
-    <body>
-        <h1>Calculadora</h1>
-        <br>
-        
-        <div class="container">
-            
-            <div class="cuerpoCalculadora">
-                
-                <div class="contenidoCalculadora">
-                    
-                    <div class="historialNumeros">
-                        <label class="numeroAHistorial" id="numeroAHistorial"></label>
-                        <label class="operadorHistorial" id="operadorHistorial"></label>
-                        <label class="numeroBHistorial" id="numeroBHistorial"></label>
-                    </div>
-                    
-                    <div class="pantalla">
-                        <input type="text" class="pantallaPrincipal" id="pantallaPrincipal">
-                        <label class="signoOperacional" id="signoOperacional"></label>
-                    </div>
-                    
-                    <div class="contenedorBotones">
-                        
-                        <input type="button" value="1" name="btnNumero">
-                        <input type="button" value="2" name="btnNumero">
-                        <input type="button" value="3" name="btnNumero">
-                        <input type="button" value="+" id="btnMas" onclick="suma()">
-                        <br>
-                        <input type="button" value="4" name="btnNumero">
-                        <input type="button" value="5" name="btnNumero">
-                        <input type="button" value="6" name="btnNumero">
-                        <input type="button" value="-" id="btnMenos" onclick="resta()">
-                        <br>
-                        <input type="button" value="7" name="btnNumero">
-                        <input type="button" value="8" name="btnNumero">
-                        <input type="button" value="9" name="btnNumero">
-                        <input type="button" value="x" id="btnMultiplicacion" onclick="multiplicacion()">
-                        <br>
-                        <input type="button" value="0" name="btnNumero">
-                        <input type="button" value="." name="btnNumero" class="btnPunto">
-                        <input type="button" value="c" onclick="reiniciarCalculadora()">
-                        <input type="button" value="/" id="btnDivision" onclick="division()">
-                        <br>
-                        <input type="button" value="00" name="btnNumero" class="dobleCero">
-                        <input type="button" value="=" class="btnIgual" id="btnIgual" onclick="resultadoFinal()">
-                        
-                    </div>
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link type="text/css" href="style.css" rel="stylesheet">
+</head>
+
+<body onload="init()">
+    <div class="container">
+        <div id="historyContainer">
+            <div class="header">
+                <svg id="close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                    <path
+                        d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z" />
+                </svg>
+            </div>
+            <ul id="list"></ul>
+            <div id="footer">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                    <path
+                        d="M627.6 57.3c14-10.9 16.5-31 5.6-44.9s-31-16.5-44.9-5.6l-144 112-72 56-8.7 6.8-30.8-39.4c-3.7-4.8-9.8-7-15.8-5.8s-10.7 5.7-12.3 11.5l-12.5 46.3L371.1 295l48-.9c6.1-.1 11.5-3.7 14.1-9.1s1.9-11.9-1.8-16.7L403 231.9l8.6-6.7 72-56 144-112zM16.7 507.7c37.4 2.8 196.8 12 252.3-31.4c57.7-45.1 76.8-161.5 76.8-161.5L267.1 213.9s-117.6-9.6-175.3 35.5C69 267.1 50.5 304.1 36.3 344c-2.4 6.7 4.7 12.8 11 9.4L86.2 333c4.1-2.2 9.2-1.1 12 2.6s2.7 8.8-.4 12.3L24.4 430.4C13.2 442.9 5.5 458.1 2.4 474.5c-.9 4.8-1.6 8.9-2.2 12.1c-.9 5 .5 10.1 3.6 14.1s7.7 6.6 12.8 7z" />
+                </svg>
+                <p>Limpiar historial</p>
             </div>
         </div>
-    </body>
-    <script type="text/javascript" src="funtion.js"></script>
+        <div id="backdrop"></div>
+        <table class="Calculadora">
+            <tr>
+                <td colspan="4">
+                    <div id="history">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path
+                                d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z" />
+                        </svg>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"><span id="Resultado"></span></td>
+            </tr>
+            <tr>
+                <td><button id="Siete">7</button></td>
+                <td><button id="Ocho">8</button></td>
+                <td><button id="Nueve">9</button></td>
+                <td><button id="División">/</button></td>
+            </tr>
+            <tr>
+                <td><button id="Cuatro">4</button></td>
+                <td><button id="Cinco">5</button></td>
+                <td><button id="Seis">6</button></td>
+                <td><button id="Multiplicación">*</button></td>
+            </tr>
+            <tr>
+                <td><button id="Uno">1</button></td>
+                <td><button id="Dos">2</button></td>
+                <td><button id="Tres">3</button></td>
+                <td><button id="Resta">-</button></td>
+            </tr>
+            <tr>
+                <td><button id="Reset">C</button></td>
+                <td><button id="Cero">0</button></td>
+                <td><button id="Igual">=</button></td>
+                <td><button id="Suma">+</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <script src="funtion.js"></script>
+</body>
+
 </html>

@@ -1,146 +1,148 @@
-//Variables de la calculadora
-var btnNumeros = document.getElementsByName("btnNumero");
-var pantallaPrincipal = document.getElementById("pantallaPrincipal");
-var signoOperacional = document.getElementById("signoOperacional");
-var btnIgual = document.getElementById("btnIgual");
+var Number1;
+var Number2;
+var NumberR;
+var list = document.getElementById('list');
 
-//variables que conforman a los labels del historial
-var operadorHistorial = document.getElementById("operadorHistorial");
-var numeroAHistorial = document.getElementById("numeroAHistorial");
-var numeroBHistorial = document.getElementById("numeroBHistorial");
+function init() {
+    //var
+    var history = document.getElementById('history');
+    var historyContainer = document.getElementById('historyContainer');
+    var close = document.getElementById('close');
+    var backdrop = document.getElementById('backdrop');
+    var footer = document.getElementById('footer');
+    var Resultado = document.getElementById('Resultado');
+    var Suma = document.getElementById('Suma');
+    var Resta = document.getElementById('Resta');
+    var Multiplicación = document.getElementById('Multiplicación');
+    var División = document.getElementById('División');
+    var Igual = document.getElementById('Igual');
+    var Reset = document.getElementById('Reset');
+    var Uno = document.getElementById('Uno');
+    var Dos = document.getElementById('Dos');
+    var Tres = document.getElementById('Tres');
+    var Cuatro = document.getElementById('Cuatro');
+    var Cinco = document.getElementById('Cinco');
+    var Seis = document.getElementById('Seis');
+    var Siete = document.getElementById('Siete');
+    var Ocho = document.getElementById('Ocho');
+    var Nueve = document.getElementById('Nueve');
+    var Cero = document.getElementById('Cero');
 
-//Varriables numericas que componen la ecuacion de la calculadora
-var valorA = 0;
-var valorB = 0;
-var resultado = 0;
+    //Events
+    history.addEventListener("click", () => {
+        backdrop.classList.add("open");
+        historyContainer.classList.add("open");
+    })
+    close.addEventListener("click", () => {
+        backdrop.classList.remove("open");
+        historyContainer.classList.remove("open");
+    })
+    footer.addEventListener("click", () => {
+        list.innerHTML = "";
+    })
 
-
-//For que recorre el arreglo btnNumeros, para leer el valor de cada uno de los botones
-for(let i = 0; i < btnNumeros.length; i++){
-    btnNumeros[i].addEventListener("click",function(){
-       pantallaPrincipal.value =  pantallaPrincipal.value + btnNumeros[i].value; 
-    });
-}
-
-
-//Funcion para validar las reglas operacionales
-function validaciones(){
-    
-    if(pantallaPrincipal.value == ""){
-        pantallaPrincipal.focus();     
-    
-    }else if(numeroAHistorial.innerHTML != "" &&  operadorHistorial.innerHTML != "" 
-             && numeroBHistorial.innerHTML == ""){
-        
-        btnIgual.focus();
-        
-    }else{
-        valorA = pantallaPrincipal.value;
-        numeroAHistorial.innerHTML = valorA;
-        numeroBHistorial.innerHTML = "";
-        pantallaPrincipal.value = "";
+    Uno.onclick = function () {
+        Resultado.textContent = Resultado.textContent + "1";
     }
-    
+    Dos.onclick = function () {
+        Resultado.textContent = Resultado.textContent + "2";
+    }
+    Tres.onclick = function () {
+        Resultado.textContent = Resultado.textContent + "3";
+    }
+    Cuatro.onclick = function () {
+        Resultado.textContent = Resultado.textContent + "4";
+    }
+    Cinco.onclick = function () {
+        Resultado.textContent = Resultado.textContent + "5";
+    }
+    Seis.onclick = function () {
+        Resultado.textContent = Resultado.textContent + "6";
+    }
+    Siete.onclick = function () {
+        Resultado.textContent = Resultado.textContent + "7";
+    }
+    Ocho.onclick = function () {
+        Resultado.textContent = Resultado.textContent + "8";
+    }
+    Nueve.onclick = function () {
+        Resultado.textContent = Resultado.textContent + "9";
+    }
+    Cero.onclick = function () {
+        Resultado.textContent = Resultado.textContent + "0";
+    }
+    Reset.onclick = () => {
+        Number1 = 0;
+        Number2 = 0;
+        Clear();
+    }
+    Suma.onclick = () => {
+        Number1 = Resultado.textContent;
+        NumberR = "+";
+        Clear();
+    }
+    Resta.onclick = () => {
+        Number1 = Resultado.textContent;
+        NumberR = "-";
+        Clear();
+    }
+    Multiplicación.onclick = () => {
+        Number1 = Resultado.textContent;
+        NumberR = "*";
+        Clear();
+    }
+    División.onclick = () => {
+        Number1 = Resultado.textContent;
+        NumberR = "/";
+        Clear();
+    }
+    Igual.onclick = () => {
+        Number2 = Resultado.textContent;
+        Solución();
+    }
 }
 
-
-//Funciones Operacionales dentro de la calculadora
-function suma(){
-    operadorHistorial.innerHTML = "+";
-    signoOperacional.innerHTML = "+";
-    validaciones();
+function Clear() {
+    var Resultado = document.getElementById("Resultado");
+    Resultado.textContent = "";
 }
 
-function resta(){
-    operadorHistorial.innerHTML = "-";
-    signoOperacional.innerHTML = "-";
-    validaciones();
+function Reset() {
+    var Resultado = document.getElementById("Resultado");
+    Resultado.textContent = "";
+    Number1 = 0;
+    Number2 = 0;
+    NumberR = "";
 }
 
-function multiplicacion(){
-    operadorHistorial.innerHTML = "x";
-    signoOperacional.innerHTML = "x";
-    validaciones();
-}
-
-function division(){
-    operadorHistorial.innerHTML = "/";
-    signoOperacional.innerHTML = "/";
-    validaciones();
-}
-
-
-
-//Funcion que realiza las operaciones
-function operaciones(){
-    valorB = pantallaPrincipal.value;
-    numeroBHistorial.innerHTML = valorB;
-    
-    switch(signoOperacional.innerHTML){
+function Solución() {
+    var Resultado = document.getElementById("Resultado");
+    var Sol = 0;
+    switch (NumberR) {
         case "+":
-            resultado = parseFloat(valorA) + parseFloat(valorB);
+            Sol = parseFloat(Number1) + parseFloat(Number2);
             break;
         case "-":
-            resultado = parseFloat(valorA) - parseFloat(valorB);
+            Sol = parseFloat(Number1) - parseFloat(Number2);
             break;
-        case "x":
-            resultado = parseFloat(valorA) * parseFloat(valorB);
+        case "*":
+            Sol = parseFloat(Number1) * parseFloat(Number2);
             break;
         case "/":
-            resultado = parseFloat(valorA) / parseFloat(valorB);
+            Sol = parseFloat(Number1) / parseFloat(Number2);
+            break;
+        default:
+            window.alert("Escoge un operación");
             break;
     }
-    
-    signoOperacional.innerHTML = "=";
-    pantallaPrincipal.value = resultado;
+    Clear();
+    list.innerHTML += `
+    <li>
+        <h3>${Sol}</h3>
+        <p>${Number1} + ${Number2}</p>
+    </li>
+    `;
+    Resultado.textContent = Sol;
+    console.log(Sol);
 }
-
-
-//Funcion que entrega el resultado Final al momento de presionar el boton Igual
-function resultadoFinal(){
-    
-    if(pantallaPrincipal.value != "" && signoOperacional.innerHTML != ""
-      && signoOperacional.innerHTML != "="){
-        operaciones();  
-    }else{
-        pantallaPrincipal.focus();
-    }
-}
-
-
-//Funcion que reinicia la calculadora
-
-function reiniciarCalculadora(){
-    valorA = 0;
-    valorB = 0;
-    resultado = 0;
-    pantallaPrincipal.value = "";
-    signoOperacional.innerHTML = "";
-    operadorHistorial.innerHTML = "";
-    numeroAHistorial.innerHTML = "";
-    numeroBHistorial.innerHTML = "";
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
